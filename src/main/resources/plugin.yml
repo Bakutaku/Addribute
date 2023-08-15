@@ -1,0 +1,4 @@
+name: Addribute
+version: '${project.version}'
+main: com.happyineo.addribute.Addribute
+api-version: '1.18'
