@@ -4,14 +4,22 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Addribute extends JavaPlugin {
 
+    private static JavaPlugin plugin;
+
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        // 起動時の処理
+        plugin = this;
 
+        super.onEnable();
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        // 終了時の処理
+
+        super.onDisable();
     }
+
+    public static JavaPlugin getPlugin(){return plugin;}
 }
