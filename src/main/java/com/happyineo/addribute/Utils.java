@@ -12,11 +12,20 @@ public class Utils {
 
     /**
      * ログ表示
+     * @param message メッセージ
+     */
+    public static void log(String... message){
+        // ログ表示
+        log(LogType.INFO,message);
+    }
+
+    /**
+     * ログ表示
      * @param logType ログの種類
      * @param message メッセージ
      */
     public static void log(LogType logType,String... message){
-        // ログメッセージ作成
+        // ログメッセージ表示
         for (String str : message) {
             // ログ表示
             switch (logType) {

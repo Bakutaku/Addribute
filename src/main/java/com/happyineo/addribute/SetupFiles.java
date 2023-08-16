@@ -17,23 +17,11 @@ public class SetupFiles {
     public static final String current = "./plugins/" + getPlugin().getClass().getSimpleName() + "/"; // ファイル生成場所
     private final String resourcesFile = "files/";  // リソースファイルの場所
 
-    private final String[] configFiles = {};  // 実行に必要なファイル
+    private final String[] configFiles = {"test.yml"};  // 実行に必要なファイル
     private final String[] oneCreateFiles = {"license/Snakeyaml_license.txt","license/Gson_license.txt","使い方.txt"};   // 1度だけ生成されるファイル
 
 
-    /**
-     * セットアップを行う
-     */
-    public void setup(){
-        log(LogType.INFO,"セットアップ中...");
-
-        // ファイルのセットアップ
-        this.setupFile();
-
-        log(LogType.INFO,"セットアップが完了しました");
-    }
-
-    private void setupFile(){
+    public void setupFile(){
 
         log(LogType.INFO,"ファイルのセットアップ中");
 
