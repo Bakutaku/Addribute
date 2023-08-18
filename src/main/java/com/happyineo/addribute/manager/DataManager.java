@@ -19,8 +19,6 @@ import static com.happyineo.addribute.Utils.log;
 public class DataManager {
     private static DataManager manager; //　インスタンス格納用
 
-    private final Map<String,Object> saveFile = new HashMap<>(); // 保存するファイル格納用
-
     private Config config;  // プラグインのコンフィグ
     private StatusConfig statusConfig;  // ステータスのコンフィグ
     private AttributeConfig attributes; // 属性情報
@@ -57,9 +55,6 @@ public class DataManager {
                 // 取得に成功した場合は登録する
                 if(data != null) this.playerStatus.put(player.getUniqueId(),data);
             }
-
-            // 保存するファイルを指定
-            saveFile.put("status/data/StatusData.json",entityStatus);
 
             log("コンフィグのロード完了しました");
 
@@ -135,9 +130,6 @@ public class DataManager {
             jsonManager.saveJsonData("status/data/"+player.getUniqueId()+".json", data);
         }
 
-        // 保存するものとして登録する
-        if(data != null) saveFile.put(file.getPath(),entityStatus);
-
         // 値を返す
         return data;
     }
@@ -167,14 +159,26 @@ public class DataManager {
     /**
      * dataを保存する
      */
-    public void save(){
-        this.saveFile.forEach((file,data) -> {
+    public void save() {
+        // マネージャーを取得
+        JsonManager manager = JsonManager.getManager();
+
+        try {
+            manager.saveJsonData("status/data/StatusData.json",this.entityStatus);
+
+        } catch (IOException e) {
+            log(LogType.ERROR,"エンティティステータスの保存に失敗しました");
+        }
+
+        this.playerStatus.forEach((uuid, status) -> {
             try {
-                JsonManager.getManager().saveJsonData(file,data);
+                manager.saveJsonData("status/data/"+uuid.toString()+".json",status);
             } catch (IOException e) {
-                log(file+"の保存に失敗しました");
+                log(LogType.ERROR,uuid.toString()+"の保存に失敗しました");
             }
         });
+
+
     }
 
 
