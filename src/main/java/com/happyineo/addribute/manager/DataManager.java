@@ -146,7 +146,8 @@ public class DataManager {
 
     public void setStatus(Entity entity,Status status){
         // プレイヤーかどうか調べる
-        if(entity instanceof Player && this.playerStatus.containsKey(entity.getUniqueId())){
+        if(entity instanceof Player){
+
             // ステータス更新
             this.playerStatus.put(entity.getUniqueId(),status);
 
@@ -177,8 +178,47 @@ public class DataManager {
                 log(LogType.ERROR,uuid.toString()+"の保存に失敗しました");
             }
         });
+    }
 
+    /**
+     * プレイヤーのステータスを保存する
+     * @param player 対象
+     */
+    public void save(Player player){
+        // マネージャーを取得
+        JsonManager manager = JsonManager.getManager();
 
+        // ステータスを保存する
+        try {
+            manager.saveJsonData("status/data/"+player.getUniqueId().toString()+".json",    // 保存先
+                    this.getStatus(player));    // データ
+
+            // ステータスの登録を取り消す
+            playerStatus.remove(player.getUniqueId());
+
+        } catch (IOException e) {
+            log(LogType.ERROR,player.getName()+"さんのステータスの保存に失敗しました");
+        }
+    }
+
+    /**
+     * ステータスが登録されているか調べる
+     * @param entity
+     * @return
+     */
+    public boolean hasStatus(Entity entity){
+
+        boolean flg = false;    // 結果格納用
+
+        // エンティティのからステータスがあるか調べる
+        flg = this.entityStatus.getEntityStatus().containsKey(entity.getUniqueId());
+
+        // プレイヤーの場合、プレイヤーのからステータスがあるか調べる
+        if(entity instanceof Player) flg = this.playerStatus.containsKey(entity.getUniqueId());
+        //TODO
+
+        // 結果を返す
+        return flg;
     }
 
 

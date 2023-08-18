@@ -1,6 +1,7 @@
 package com.happyineo.addribute.manager;
 
 import com.happyineo.addribute.SetupFiles;
+import com.happyineo.addribute.type.LogType;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.ConstructorException;
 import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
@@ -62,7 +63,7 @@ public class YamlManager {
             // 値を返す
             return data;
         }catch (ParserException | ConstructorException e){
-            log(fileName+"の構文が間違っています。",
+            log(LogType.ERROR,fileName+"の構文が間違っています。",
                     fileName+"の取得に失敗したため初期値を適応します",
                     "原因:"+e.getMessage());
             return type.getDeclaredConstructor().newInstance();
