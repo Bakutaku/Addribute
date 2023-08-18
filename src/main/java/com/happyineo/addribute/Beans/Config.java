@@ -1,78 +1,113 @@
 package com.happyineo.addribute.Beans;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class Config {
-    public static class test{
-        private String id = "id1";
-        private String data = "name";
 
-        public String getId() {
-            return id;
-        }
+    private boolean disableInvincibleTime = true;   // 無敵時間無効(エンティティから受けるダメージのみ)
+    private boolean displayDamage = true;   // ダメージ表示の有無
+    private boolean natureStatusHasEntity = true;   // 自然湧きのエンティティもステータスを持たせるかどうか
+    private String[] statusNotEntity = {"ARMOR_STAND"}; // 対象外のエンティティ
+    private String displayDamageFormat = "?????0.00";  // ダメージ表記形式
+    private int displayDamageTime = 10; // ダメージの表示時間
+    private int displayDamageMax = -1;  // ダメージ表示の最大数
+    private double displayDamagePositionX = 0.3;    // ダメージ拡散範囲_X
+    private double displayDamagePositionY = 1.5;    // ダメージ拡散範囲_Y
+    private double displayDamagePositionZ = 0.3;    // ダメージ拡散範囲_Z
+    private int criticalHit = 20;   // クリティカルヒット率(%表記)
+    private int statusTime = 200;   // ステータスの更新タイミング(tick)
 
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getData() {
-            return data;
-        }
-
-        public void setData(String data) {
-            this.data = data;
-        }
-    }
-    private String name = "名前";
-    private int count = 10;
-
-    private List<String> list = new ArrayList<>();
-
-    private Map<String,Integer> map = new HashMap<>();
-
-    private List<test> tests = new ArrayList<>();
-
-
-    public List<test> getTests() {
-        return tests;
+    public boolean isDisableInvincibleTime() {
+        return disableInvincibleTime;
     }
 
-    public void setTests(List<test> tests) {
-        this.tests = tests;
+    public void setDisableInvincibleTime(boolean disableInvincibleTime) {
+        this.disableInvincibleTime = disableInvincibleTime;
     }
 
-    public String getName() {
-        return name;
+    public boolean isDisplayDamage() {
+        return displayDamage;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDisplayDamage(boolean displayDamage) {
+        this.displayDamage = displayDamage;
     }
 
-    public int getCount() {
-        return count;
+    public boolean isNatureStatusHasEntity() {
+        return natureStatusHasEntity;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setNatureStatusHasEntity(boolean natureStatusHasEntity) {
+        this.natureStatusHasEntity = natureStatusHasEntity;
     }
 
-    public List<String> getList() {
-        return list;
+    public String[] getStatusNotEntity() {
+        return statusNotEntity;
     }
 
-    public void setList(List<String> list) {
-        this.list = list;
+    public void setStatusNotEntity(String[] statusNotEntity) {
+        this.statusNotEntity = statusNotEntity;
     }
 
-    public Map<String, Integer> getMap() {
-        return map;
+    public String getDisplayDamageFormat() {
+        return displayDamageFormat;
     }
 
-    public void setMap(Map<String, Integer> map) {
-        this.map = map;
+    public void setDisplayDamageFormat(String displayDamageFormat) {
+        this.displayDamageFormat = displayDamageFormat;
+    }
+
+    public int getDisplayDamageTime() {
+        return displayDamageTime;
+    }
+
+    public void setDisplayDamageTime(int displayDamageTime) {
+        this.displayDamageTime = displayDamageTime;
+    }
+
+    public int getDisplayDamageMax() {
+        return displayDamageMax;
+    }
+
+    public void setDisplayDamageMax(int displayDamageMax) {
+        this.displayDamageMax = displayDamageMax;
+    }
+
+    public double getDisplayDamagePositionX() {
+        return displayDamagePositionX;
+    }
+
+    public void setDisplayDamagePositionX(double displayDamagePositionX) {
+        this.displayDamagePositionX = displayDamagePositionX;
+    }
+
+    public double getDisplayDamagePositionY() {
+        return displayDamagePositionY;
+    }
+
+    public void setDisplayDamagePositionY(double displayDamagePositionY) {
+        this.displayDamagePositionY = displayDamagePositionY;
+    }
+
+    public double getDisplayDamagePositionZ() {
+        return displayDamagePositionZ;
+    }
+
+    public void setDisplayDamagePositionZ(double displayDamagePositionZ) {
+        this.displayDamagePositionZ = displayDamagePositionZ;
+    }
+
+    public int getCriticalHit() {
+        return criticalHit;
+    }
+
+    public void setCriticalHit(int criticalHit) {
+        this.criticalHit = criticalHit;
+    }
+
+    public int getStatusTime() {
+        return statusTime;
+    }
+
+    public void setStatusTime(int statusTime) {
+        this.statusTime = statusTime;
     }
 }

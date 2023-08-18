@@ -1,7 +1,14 @@
 package com.happyineo.addribute;
 
+import com.happyineo.addribute.Beans.Config;
+import com.happyineo.addribute.manager.DataManager;
 import com.happyineo.addribute.type.LogType;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.yaml.snakeyaml.Yaml;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 import static com.happyineo.addribute.Utils.log;
 
@@ -14,12 +21,9 @@ public final class Addribute extends JavaPlugin {
         // 起動時の処理
         plugin = this;
 
-        log("セットアップ中");
-
         // セットアップ
         new Setup().setup();
 
-        log("セットアップが完了しました");
 
         super.onEnable();
     }
@@ -27,6 +31,9 @@ public final class Addribute extends JavaPlugin {
     @Override
     public void onDisable() {
         // 終了時の処理
+
+        // データを保存
+        DataManager.getManager().save();
 
         super.onDisable();
     }

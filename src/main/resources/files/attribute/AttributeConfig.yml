@@ -1,0 +1,15 @@
+attributes:
+
+  test1:
+    name: "test1"
+    mags:
+      test2:
+        name: "test2"
+        mag: 1.5
+
+  test2:
+    name: "test1"
+    mags:
+      test1:
+        name: "test1"
+        mag: 1.5

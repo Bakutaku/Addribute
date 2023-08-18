@@ -1,0 +1,46 @@
+#Addributeプラグインのコンフィグ
+
+#エンティティからの攻撃による無敵時間の無効化(true:無効,false:無敵時間あり)
+disableInvincibleTime: true
+
+#ダメージ表示の有無(true:あり,false:なし)
+displayDamage: true
+
+#自然湧きのエンティティ(このプラグインによって召喚されてエンティティ以外)にステータスを持たせるかどうか
+#(true: 持たせる, false:持たせない)
+# ステータスが登録されていないエンティティのダメージ処理などはMinecraftのダメージ処理が使用されます
+natureStatusHasEntity: true
+
+#ステータスを持たせる対象外のエンティティ
+#一部エンティティは強制的に対象外に指定されています(例: Item)
+#またこのプラグインで召喚するエンティティにはこの設定は影響しません
+#初期値として「ARMOR_STAND」が設定されていますが、外すこともできます
+#ただ一部機能でアーマースタンドを使用しているためメモリ使用量また処理が大幅に増加する可能性があるため
+#「ARMOR_STAND」を設定することを推奨します。
+# エンティティの指定方法はsummonコマンドなので使用するエンティティの名前を全て大文字にしたものです
+statusNotEntity: ["ARMOR_STAND"]
+
+# ダメージ表示形式
+# 表示されるダメージの表示内容を設定できます
+# 例:
+#  ??????.???で123.4の場合 → 123.4
+#  ?????0.000で123.4の場合 → 123.400
+#  ????で123.4の場合 → 123
+displayDamageFormat: "?????0.00"
+
+# ダメージの表示時間(tick:20=1秒)
+displayDamageTime: 10
+
+# ダメージ表示の最大数(「-1」にすると無制限になります)
+displayDamageMax: -1
+
+# ダメージ表示の拡散範囲
+displayDamagePositionX: 0.3
+displayDamagePositionY: 1.5
+displayDamagePositionZ: 0.3
+
+# クリティカルヒット率(パーセント表記)
+criticalHit: 20
+
+# エンティティのステータス更新タイミング(tick:20=1秒)
+statusTime: 200

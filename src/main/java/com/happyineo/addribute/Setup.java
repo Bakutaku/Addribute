@@ -7,13 +7,14 @@ import static com.happyineo.addribute.Utils.log;
 public class Setup {
 
     public void setup(){
+        log("セットアップ中");
+
         SetupFiles file = new SetupFiles();
 
         file.setupFile();
 
-        log("ログ");
-
         DataManager.getManager();
-    }
 
+        log("セットアップが完了しました");
+    }
 }

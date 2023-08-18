@@ -17,7 +17,7 @@ public class SetupFiles {
     public static final String current = "./plugins/" + getPlugin().getClass().getSimpleName() + "/"; // ファイル生成場所
     private final String resourcesFile = "files/";  // リソースファイルの場所
 
-    private final String[] configFiles = {"test.yml"};  // 実行に必要なファイル
+    private final String[] configFiles = {"Config.yml","status/StatusConfig.yml","attribute/AttributeConfig.yml","status/data/StatusData.json"};  // 実行に必要なファイル
     private final String[] oneCreateFiles = {"license/Snakeyaml_license.txt","license/Gson_license.txt","使い方.txt"};   // 1度だけ生成されるファイル
 
 
