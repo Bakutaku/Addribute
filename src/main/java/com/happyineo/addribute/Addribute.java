@@ -28,8 +28,8 @@ public final class Addribute extends JavaPlugin {
         new Setup().setup();
 
         // イベント登録
-        Bukkit.getPluginManager().registerEvents(new JoinEvent(),this);
-        Bukkit.getPluginManager().registerEvents(new QuitEvent(),this);
+        Bukkit.getPluginManager().registerEvents(new JoinEvent(),this); // ログイン時のイベント(データベースの場合不要)
+        Bukkit.getPluginManager().registerEvents(new QuitEvent(),this); // ログアウト時のイベント
 
         super.onEnable();
     }

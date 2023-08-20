@@ -50,7 +50,7 @@ public class DataManager {
             for (Player player : Bukkit.getOnlinePlayers()) {
 
                 // ステータス取得
-                Status data = this.getPlayerStatus(player);
+                Status data = this.getFilePlayerStatus(player);
 
                 // 取得に成功した場合は登録する
                 if(data != null) this.playerStatus.put(player.getUniqueId(),data);
@@ -72,7 +72,7 @@ public class DataManager {
     }
 
 
-    public Status getPlayerStatus(Player player) throws IOException {
+    private Status getFilePlayerStatus(Player player) throws IOException {
 
         // マネージャーを取得
         JsonManager jsonManager = JsonManager.getManager();
@@ -141,13 +141,25 @@ public class DataManager {
         // プレイヤーの場合のステータス取得
         if(entity instanceof Player) data = this.playerStatus.get(entity.getUniqueId());
 
+        // 上の2つで取得できなかった場合プレイヤーのファイルからステータスを取得する
+        if(entity instanceof Player && data == null) {
+            try {
+                // ファイルからステータスを取得
+                data = this.getFilePlayerStatus((Player) entity);
+
+                // ステータスを登録する(登録されておらずファイルが生成されている(もしくは生成した)ため)
+                this.playerStatus.put(entity.getUniqueId(),data);
+
+            } catch (IOException ignored) {;}
+        }
+
+        // 値を返す
         return data;
     }
 
     public void setStatus(Entity entity,Status status){
         // プレイヤーかどうか調べる
-        if(entity instanceof Player){
-
+        if(entity instanceof Player && this.playerStatus.containsKey(entity.getUniqueId())){
             // ステータス更新
             this.playerStatus.put(entity.getUniqueId(),status);
 
@@ -181,47 +193,24 @@ public class DataManager {
     }
 
     /**
-     * プレイヤーのステータスを保存する
+     * データを保存する
      * @param player 対象
      */
     public void save(Player player){
         // マネージャーを取得
         JsonManager manager = JsonManager.getManager();
 
-        // ステータスを保存する
+        // ファイルに保存
         try {
-            manager.saveJsonData("status/data/"+player.getUniqueId().toString()+".json",    // 保存先
-                    this.getStatus(player));    // データ
-
-            // ステータスの登録を取り消す
-            playerStatus.remove(player.getUniqueId());
-
+            manager.saveJsonData("status/data/"+player.getUniqueId()+".json",this.playerStatus.get(player.getUniqueId()));
         } catch (IOException e) {
             log(LogType.ERROR,player.getName()+"さんのステータスの保存に失敗しました");
         }
+
+        // データをメモリから削除
+        this.playerStatus.remove(player.getUniqueId());
+
     }
-
-    /**
-     * ステータスが登録されているか調べる
-     * @param entity
-     * @return
-     */
-    public boolean hasStatus(Entity entity){
-
-        boolean flg = false;    // 結果格納用
-
-        // エンティティのからステータスがあるか調べる
-        flg = this.entityStatus.getEntityStatus().containsKey(entity.getUniqueId());
-
-        // プレイヤーの場合、プレイヤーのからステータスがあるか調べる
-        if(entity instanceof Player) flg = this.playerStatus.containsKey(entity.getUniqueId());
-        //TODO
-
-        // 結果を返す
-        return flg;
-    }
-
-
 
 
 

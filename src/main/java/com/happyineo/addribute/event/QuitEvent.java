@@ -7,16 +7,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class QuitEvent implements Listener {
 
-    // プレイヤーがログアウトする時のイベント
+    // プレイヤーがログアウトした時のイベント
     @EventHandler
     public void onPlayerQuitEvent(PlayerQuitEvent event){
 
-        // マネージャーを取得
-        DataManager manager = DataManager.getManager();
-
-        // ステータスを保存
-        manager.save(event.getPlayer());
+        // プレイヤーのデータを保存する
+        DataManager.getManager().save(event.getPlayer());
 
     }
-
 }

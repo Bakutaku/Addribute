@@ -7,38 +7,39 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-
-
 public class StatusManager {
 
-    private static StatusManager manager;
+    private static StatusManager manager;   // 自クラスのインスタンス格納用
 
-    private DataManager dataManager;
+    private DataManager dataManager;    // データ関係用
 
+    /**
+     * コンストラクタ
+     */
     private StatusManager() {
         manager = this;
 
-        // マネージャーを取得
+        //  データベースに切り替える場合、ここを変更することで切り替えれるようにする
         dataManager = DataManager.getManager();
 
     }
 
+
     /**
-     * ステータスを変更する
+     * エンティティのステータスを取得する
      * @param entity 対象
-     * @param status ステータス
+     * @return ステータス
      */
-    public void setStatusEntity(Entity entity, Status status){
-        // ステータス変更 & 登録
-        dataManager.setStatus(entity,status);
+    public Status getStatus(Entity entity){
+        return dataManager.getStatus(entity);
     }
 
     /**
-     * ステータスが登録されているか調べる
-     * @return あるかないか
+     * ステータスを設定する
+     * @param status ステータス情報
      */
-    public boolean hasStatusEntity(){
-        return false;//TODO ステータスが登録済みまたはファイルに保存されいるかを調べ結果を返すメソッドを作成する
+    public void setStatus(Entity entity, Status status){
+        dataManager.setStatus(entity,status);
     }
 
 
@@ -46,13 +47,13 @@ public class StatusManager {
      * ステータスを登録または初期化する
      * @param entity 対象
      */
-    public void setStatusEntity(Entity entity){
+    public void createStatusEntity(Entity entity) {
 
         LivingEntity livingEntity;  // データ型返還後の格納用
 
         // データ型を変換する(生きているエンティティか調べる)
-        if(entity instanceof LivingEntity) livingEntity = (LivingEntity) entity;
-        // 出来なかった場合
+        if (entity instanceof LivingEntity) livingEntity = (LivingEntity) entity;
+            // 出来なかった場合
         else return;
 
         // コンフィグ取得
@@ -83,7 +84,7 @@ public class StatusManager {
         data.setStatusPoint(statusConfig.getStatusPointDefault());
 
         // プレイヤー以外かどうか
-        if(!(entity instanceof Player)){
+        if (!(entity instanceof Player)) {
             // プレイヤー以外の場合
 
             // 一部の初期値変更(体力などをエンティティの体力にあわせるため)
@@ -91,9 +92,9 @@ public class StatusManager {
             String name = statusConfig.getNameDefault();
 
             // 名前がない場合
-            if(entity.getName().equals("")) name = name.replace("%n",entity.getType().toString());
-            // 名前がある場合
-            else name = name.replace("%n",entity.getName());
+            if (entity.getName().equals("")) name = name.replace("%n", entity.getType().toString());
+                // 名前がある場合
+            else name = name.replace("%n", entity.getName());
 
             // 変更する
             data.setName(name); // 名前
@@ -101,13 +102,18 @@ public class StatusManager {
             data.setHealth(livingEntity.getHealth());   // 体力
         }
 
-        // ステータスを登録する
-        this.setStatusEntity(entity,data);
+        // 登録
+        this.setStatus(entity,data);
     }
 
 
+    /**
+     * StatusManagerのインスタンスを取得する
+     * @return {@link StatusManager}
+     */
     public static StatusManager getManager(){
         if(manager == null) manager = new StatusManager();
         return manager;
     }
+
 }

@@ -7,14 +7,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class JoinEvent implements Listener {
 
-    // プレイヤーがサーバーに参加したときのイベント
+    // プレイヤーがログインしたときのイベント
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event){
+        // プレイヤーのステータスを設定する(getの際にプレイヤーのデータも自動で作成される)
+        StatusManager.getManager().getStatus(event.getPlayer());
 
-        // マネージャーを取得
-        StatusManager manager = StatusManager.getManager();
-
-        // ステータスを設定
-        manager.setStatusEntity(event.getPlayer());
     }
 }
