@@ -1,8 +1,11 @@
 package com.happyineo.addribute;
 
 import com.happyineo.addribute.Beans.Config;
+import com.happyineo.addribute.event.JoinEvent;
+import com.happyineo.addribute.event.QuitEvent;
 import com.happyineo.addribute.manager.DataManager;
 import com.happyineo.addribute.type.LogType;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.yaml.snakeyaml.Yaml;
@@ -24,6 +27,9 @@ public final class Addribute extends JavaPlugin {
         // セットアップ
         new Setup().setup();
 
+        // イベント登録
+        Bukkit.getPluginManager().registerEvents(new JoinEvent(),this); // ログイン時のイベント(データベースの場合不要)
+        Bukkit.getPluginManager().registerEvents(new QuitEvent(),this); // ログアウト時のイベント
 
         super.onEnable();
     }
