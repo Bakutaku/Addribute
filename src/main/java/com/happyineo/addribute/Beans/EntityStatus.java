@@ -3,10 +3,11 @@ package com.happyineo.addribute.Beans;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class EntityStatus {
     // プレイヤー以外のステータスを格納する
-    private Map<UUID,Status> entityStatus = new HashMap<>();
+    private ConcurrentHashMap<UUID,Status> entityStatus = new ConcurrentHashMap<>();
 
 
     public Map<UUID, Status> getEntityStatus() {
@@ -14,6 +15,6 @@ public class EntityStatus {
     }
 
     public void setEntityStatus(Map<UUID, Status> entityStatus) {
-        this.entityStatus = entityStatus;
+        this.entityStatus = (ConcurrentHashMap<UUID, Status>) entityStatus;
     }
 }

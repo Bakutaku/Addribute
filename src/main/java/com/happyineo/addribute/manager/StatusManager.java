@@ -106,6 +106,15 @@ public class StatusManager {
         this.setStatus(entity,data);
     }
 
+    /**
+     * ステータスを持っているか調べる
+     * @param entity 対象
+     * @return ステータスを持っているかいないか
+     */
+    public boolean hasStatus(Entity entity){
+        return this.getStatus(entity) != null;
+    }
+
 
     /**
      * StatusManagerのインスタンスを取得する
