@@ -1,5 +1,8 @@
 package com.happyineo.addribute.Beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Status {
     private String name = "%n";
     private int maxHealth = 20; // 最大体力
@@ -22,6 +25,12 @@ public class Status {
     private int dropExp = 5;   // 落とす経験値
     private int level = 0;  // レベル
     private int statusPoint = 5;    // ステータスポイント
+    private List<String> attribute = new ArrayList<>(); // 属性
+
+    public Status() {
+        // 初期値設定(属性)
+        attribute.add("default");
+    }
 
     public String getName() {
         return name;
@@ -189,5 +198,13 @@ public class Status {
 
     public void setStatusPoint(int statusPoint) {
         this.statusPoint = statusPoint;
+    }
+
+    public List<String> getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(List<String> attribute) {
+        this.attribute = attribute;
     }
 }
