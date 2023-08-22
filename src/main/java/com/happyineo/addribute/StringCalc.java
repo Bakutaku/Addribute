@@ -8,7 +8,7 @@ import static com.happyineo.addribute.Utils.log;
 
 public class StringCalc {
 
-
+    private String input;   // 初期値(入力された時の式)
     private String formula;   // 計算式格納用
     private String build;   // 逆ポーランド記法格納用
 
@@ -20,7 +20,23 @@ public class StringCalc {
      */
     public StringCalc(String formula) {
         // 空白を消す
-        this.formula = formula.replaceAll("\\s","");
+        this.input = formula.replaceAll("\\s","");
+
+        // 式を設定
+        this.reset();
+    }
+
+    /**
+     * 代入した変数の中身をリセットする
+     * @return {@link StringCalc}
+     */
+    public StringCalc reset(){
+        // 生成した逆ポーランド記法をリセットする
+        this.build = null;
+        // 式を初期値にする
+        this.formula = this.input;
+
+        return this;
     }
 
     /**
