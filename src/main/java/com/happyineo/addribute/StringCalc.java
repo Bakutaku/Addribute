@@ -1,11 +1,16 @@
 package com.happyineo.addribute;
 
+import com.happyineo.addribute.type.LogType;
+
 import java.util.*;
+
+import static com.happyineo.addribute.Utils.log;
 
 public class StringCalc {
 
 
     private String formula;   // 計算式格納用
+    private String build;   // 逆ポーランド記法格納用
 
 
     /**
@@ -15,7 +20,7 @@ public class StringCalc {
      */
     public StringCalc(String formula) {
         // 空白を消す
-        this.formula = formula.replace("\\s","");
+        this.formula = formula.replaceAll("\\s","");
     }
 
     /**
@@ -48,7 +53,7 @@ public class StringCalc {
      * 計算式を逆ポーランド記法に変換する
      * @return 逆ポーランド記法
      */
-    private String build(String formula){
+    public StringCalc build(){
 
         Map<String,Integer> weight = new HashMap<>();   // 優先順位用
         weight.put("^", 4);
@@ -58,11 +63,11 @@ public class StringCalc {
         weight.put("-", 2);
         weight.put("(", 1);
 
-
         Stack<String> stack = new Stack<>(); // 演算子一時保管用
         StringBuilder builder = new StringBuilder();    // 結果出力用
 
-        for(String str : formula.split("\\s")){
+        // 数字と演算子を分割してループする(分割には正規表記を使用)
+        for(String str : this.formula.split("(?<=[-+*/()^])|(?=[-+*/()^])")){
             if(str.matches("^([1-9]\\d*|0)(\\.\\d+)?$|^(-[1-9]\\d*|0)(\\.\\d+)?$")){
                 // 数字の場合
 
@@ -86,7 +91,7 @@ public class StringCalc {
                 stack.pop();
             }else {
                 // 演算子の場合
-                System.out.println(str);
+
                 // 現在の演算子の優先度の方が優先度が高くなるまでスタックの中身を出力する
                 while(!stack.isEmpty() && weight.get(str) <= weight.get(stack.peek())){
 
@@ -102,7 +107,10 @@ public class StringCalc {
             builder.append(stack.pop()).append(" ");
         }
 
-        return builder.toString();
+        // 保存
+        this.build = builder.toString();
+
+        return this;
     }
 
 
@@ -112,6 +120,110 @@ public class StringCalc {
      */
     public double calc(){
 
+        double answer = 0;  // 答え格納用
+
+        // 変換が終わっているか確かめる
+        if(build == null){
+            // 終わっていない場合
+
+            // 逆ポーランド記法に変換する
+            this.build();
+
+            // 再度実行
+            answer = this.calc();
+        }else{
+            // 変換済みの場合
+
+            Stack<Double> stack = new Stack<>();    // 数字格納用
+
+            // 空白で区切り各値をループで調べる
+            for(String val : this.build.split("\\s")){
+
+                // 数字かどうか
+                if(val.matches("^([1-9]\\d*|0)(\\.\\d+)?$|^(-[1-9]\\d*|0)(\\.\\d+)?$")){
+                    // 数字の場合
+                    // スタックに数字を追加
+                    stack.push(Double.valueOf(val));
+
+                    // 次のループへ
+                    continue;
+                }
+
+                // 取り出した値格納用
+                double num1;
+                double num2;
+
+                switch (val){
+                    case "+":
+                        // 値を取り出す
+                        num1 = stack.pop();
+                        num2 = stack.pop();
+
+                        // 計算を行いスタックに格納する
+                        stack.push(num1 + num2);
+
+                        break;
+
+                    case "-":
+                        // 値を取り出す
+                        num1 = stack.pop();
+                        num2 = stack.pop();
+
+                        // 計算を行いスタックに格納する
+                        stack.push(num1 - num2);
+
+                        break;
+
+                    case "*":
+                        // 値を取り出す
+                        num1 = stack.pop();
+                        num2 = stack.pop();
+
+                        // 計算を行いスタックに格納する
+                        stack.push(num1 * num2);
+
+                        break;
+
+                    case "/":
+                        // 値を取り出す
+                        num1 = stack.pop();
+                        num2 = stack.pop();
+
+                        // 計算を行いスタックに格納する
+                        try {
+                            stack.push(num1 / num2);
+                        } catch (ArithmeticException e) {
+                            // 0演算の場合、とりあえず0を入れておく
+                            stack.push(0.0);
+                        }
+
+                        break;
+
+                    case "^":
+                        // 値を取り出す
+                        num1 = stack.pop();
+                        num2 = stack.pop();
+
+                        // 計算を行いスタックに格納する
+                        stack.push(Math.pow(num2,num1));
+
+                        break;
+
+                    default:
+                        // 変数が変換されていない場合
+
+                        // 初期値として0を格納する
+                        stack.push(0.0);
+                }
+            }
+
+            // 結果を取り出す
+            answer = stack.pop();
+
+        }
+
+        // 結果を返す
+        return answer;
     }
 
 }
