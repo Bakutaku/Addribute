@@ -8,7 +8,6 @@ import static com.happyineo.addribute.Utils.log;
 
 public class StringCalc {
 
-
     private String formula;   // 計算式格納用
     private String build;   // 逆ポーランド記法格納用
 
