@@ -12,6 +12,7 @@ public class Config {
     private double displayDamagePositionX = 0.3;    // ダメージ拡散範囲_X
     private double displayDamagePositionY = 1.5;    // ダメージ拡散範囲_Y
     private double displayDamagePositionZ = 0.3;    // ダメージ拡散範囲_Z
+    private double displayDamagePositionMaxY = 2;   // ダメージ上昇頂点_Y
     private int criticalHit = 20;   // クリティカルヒット率(%表記)
     private int statusTime = 200;   // ステータスの更新タイミング(tick)
 
@@ -93,6 +94,14 @@ public class Config {
 
     public void setDisplayDamagePositionZ(double displayDamagePositionZ) {
         this.displayDamagePositionZ = displayDamagePositionZ;
+    }
+
+    public double getDisplayDamagePositionMaxY() {
+        return displayDamagePositionMaxY;
+    }
+
+    public void setDisplayDamagePositionMaxY(double displayDamagePositionMaxY) {
+        this.displayDamagePositionMaxY = displayDamagePositionMaxY;
     }
 
     public int getCriticalHit() {

@@ -1,15 +1,24 @@
 package com.happyineo.addribute.event;
 
+import com.happyineo.addribute.manager.DamageManager;
 import com.happyineo.addribute.manager.StatusManager;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
+
+import static com.happyineo.addribute.Addribute.getPlugin;
+import static com.happyineo.addribute.Utils.log;
 
 public class DamageEvent implements Listener {
 
-    private StatusManager statusManager = StatusManager.getManager();
+    private final StatusManager statusManager = StatusManager.getManager();
+    private final DamageManager damageManager = DamageManager.getManager();
 
     @EventHandler
     public void onEntityDamageEvent(EntityDamageEvent event){
@@ -29,6 +38,10 @@ public class DamageEvent implements Listener {
         // ステータスがないエンティティは処理を行わない
         if(!statusManager.hasStatus(event.getEntity())) return;
 
+        // 生きていないエンティティは処理を行わない
+        if(!(event.getEntity() instanceof LivingEntity)) return;
+
+
         // エンティティからダメージを受けたか
         if(event instanceof EntityDamageByEntityEvent){
             // 受けた場合
@@ -42,9 +55,7 @@ public class DamageEvent implements Listener {
             if (atk instanceof Arrow) {
                 // 弓で攻撃された場合
                 // 攻撃者を取得
-                if (((Arrow) atk).getShooter() instanceof Entity) {
-                    atk = (Entity) ((Arrow) atk).getShooter();
-                }
+                if (((Arrow) atk).getShooter() instanceof Entity) atk = (Entity) ((Arrow) atk).getShooter();
 
             } else if (atk instanceof TNTPrimed) {
                 // TNTで攻撃された場合
@@ -54,16 +65,54 @@ public class DamageEvent implements Listener {
             } else if (atk instanceof Trident) {
                 // トライデントで攻撃された場合
                 // 攻撃者を取得
-                atk = (Entity) ((Trident) atk).getShooter();
+                if(((Trident) atk).getShooter() != null) atk = (Entity) ((Trident) atk).getShooter();
             } else if (atk instanceof ThrownPotion) {
                 // ポーションで攻撃された場合
                 // 攻撃者を取得
-                atk = (Entity) ((ThrownPotion) atk).getShooter();
+                if(((ThrownPotion) atk).getShooter() != null) atk = (Entity) ((ThrownPotion) atk).getShooter();
             }
 
+            // ダメージ取得
+            double damage = e.getDamage();
 
+            // 攻撃に使用する属性
+            String attribute = "default";
 
+            // 攻撃が魔法かどうかを調べる
+            if(damageManager.checkMagicAtk(atk,damage)){
+                // 魔法の場合
+                // 属性取得
+                attribute = damageManager.getMagicAtkAttribute(atk,damage);
+            }else{
+                // 通常攻撃の場合
+                // 武器の攻撃力を取得
+                ItemMeta item = null;
+                if(atk instanceof LivingEntity && ((LivingEntity) atk).getEquipment() != null) item = ((LivingEntity) atk).getEquipment().getItemInMainHand().getItemMeta();
 
+                // アイテムを取得できているか
+                if(item != null){
+                    // できた場合
+                    // 検索用のkeyを作成
+                    NamespacedKey atkKey = new NamespacedKey(getPlugin(),"damage");
+                    NamespacedKey attKey = new NamespacedKey(getPlugin(),"attribute");
+
+                    // アイテムから情報を取得
+                    PersistentDataContainer data = item.getPersistentDataContainer();
+
+                    // 攻撃力を取得(設定されている場合のみ)
+                    if(data.has(atkKey, PersistentDataType.DOUBLE)){
+                        damage = data.get(atkKey,PersistentDataType.DOUBLE);
+                    }
+
+                    // 攻撃属性を取得(設定されている場合のみ)
+                    if(data.has(attKey,PersistentDataType.STRING)){
+                        attribute = data.get(attKey,PersistentDataType.STRING);
+                    }
+                }
+            }
+
+            // ダメージを反映する
+            damageManager.damage(atk,e.getEntity(),attribute,damage);
         }
     }
 

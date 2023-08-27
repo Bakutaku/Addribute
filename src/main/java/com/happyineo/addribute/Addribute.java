@@ -1,19 +1,13 @@
 package com.happyineo.addribute;
 
-import com.happyineo.addribute.Beans.Config;
+import com.happyineo.addribute.event.DamageEvent;
 import com.happyineo.addribute.event.JoinEvent;
 import com.happyineo.addribute.event.QuitEvent;
 import com.happyineo.addribute.manager.DataManager;
-import com.happyineo.addribute.type.LogType;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.yaml.snakeyaml.Yaml;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-
-import static com.happyineo.addribute.Utils.log;
+import static com.happyineo.addribute.Utils.*;
 
 public final class Addribute extends JavaPlugin {
 
@@ -30,6 +24,7 @@ public final class Addribute extends JavaPlugin {
         // イベント登録
         Bukkit.getPluginManager().registerEvents(new JoinEvent(),this); // ログイン時のイベント(データベースの場合不要)
         Bukkit.getPluginManager().registerEvents(new QuitEvent(),this); // ログアウト時のイベント
+        Bukkit.getPluginManager().registerEvents(new DamageEvent(),this);   // ダメージを受けたときのイベント
 
         super.onEnable();
     }

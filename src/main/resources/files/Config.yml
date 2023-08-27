@@ -6,7 +6,7 @@ disableInvincibleTime: true
 #ダメージ表示の有無(true:あり,false:なし)
 displayDamage: true
 
-#自然湧きのエンティティ(このプラグインによって召喚されてエンティティ以外)にステータスを持たせるかどうか
+#自然湧きのエンティティ(このプラグインによって召喚されたエンティティ以外)にステータスを持たせるかどうか
 #(true: 持たせる, false:持たせない)
 # ステータスが登録されていないエンティティのダメージ処理などはMinecraftのダメージ処理が使用されます
 natureStatusHasEntity: true
@@ -22,6 +22,8 @@ statusNotEntity: ["ARMOR_STAND"]
 
 # ダメージ表示形式
 # 表示されるダメージの表示内容を設定できます
+# カラーコード(&数字)などでダメージに色を付けることができます。
+# その場合は属性に設定した色コードが無効になります
 # 例:
 #  ??????.???で123.4の場合 → 123.4
 #  ?????0.000で123.4の場合 → 123.400
@@ -36,8 +38,11 @@ displayDamageMax: -1
 
 # ダメージ表示の拡散範囲
 displayDamagePositionX: 0.3
-displayDamagePositionY: 1.5
+displayDamagePositionY: 0.5
 displayDamagePositionZ: 0.3
+
+# 上下する最大地点(表示が上昇する場合の頂点,「2」の場合だと2ブロック分上昇します)
+displayDamagePositionMaxY: 2
 
 # クリティカルヒット率(パーセント表記)
 criticalHit: 20

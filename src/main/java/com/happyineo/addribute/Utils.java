@@ -49,6 +49,31 @@ public class Utils {
     }
 
     /**
+     * RGBで色を付ける
+     * @param r red
+     * @param g green
+     * @param b blue
+     * @return カラーコード
+     */
+    public static String getColorCode(int r,int g,int b){
+        // RGB値を変換しカラーコードに変換し文字列にし表示する際の色の形式にする
+        return getColorCode(String.format("%02x%02x%02x", r,g,b));
+    }
+
+
+    /**
+     * RGBで色を付ける
+     * @param color カラーコード
+     * @return 表示に使用するカラーコード
+     */
+    public static String getColorCode(String color){
+        // コードが間違っていたらなしにする
+        if(ChatColor.getByChar(color) == null) return "";
+        // 変換しその値を返す
+        return ChatColor.getByChar(color).toString();
+    }
+
+    /**
      * 文字に色を付けるメソッド
      * @param str 色を付ける文字列
      * @return 色が付いた文字列

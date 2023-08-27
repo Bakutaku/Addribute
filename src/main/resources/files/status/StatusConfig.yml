@@ -149,6 +149,7 @@ levelUpNeedExpPoint: 15
 #   da    : 受けたダメージ
 #   vit   : 防御力
 #   mags  : ダメージ倍率(属性の相性による倍率合計)
+#   ra    : 0以上1未満の乱数
 
 calcDamage: "damage * mags - vit"
 
