@@ -2,6 +2,7 @@ package com.happyineo.addribute.manager;
 
 import com.happyineo.addribute.Beans.Status;
 import com.happyineo.addribute.Beans.StatusConfig;
+import com.happyineo.addribute.RPGDamage;
 import com.happyineo.addribute.StringCalc;
 import com.happyineo.addribute.type.LogType;
 import org.bukkit.entity.Entity;
@@ -52,7 +53,6 @@ public class DamageManager {
         AttributeManager manager = AttributeManager.getManager();
 
         double answer = 0; // 結果格納用
-
         // 受ける側の属性を1ずつ確かめる
         for(String key : defense){
             // 弱点属性を調べる
@@ -64,7 +64,6 @@ public class DamageManager {
                 }
             }
         }
-
         // 倍率を返す
         return answer;
     }
@@ -118,6 +117,9 @@ public class DamageManager {
 
         // 体力を設定
         entityStatus.setHealth(health);
+
+        // ダメージを表示
+        RPGDamage.getManager().disp(entity,damage,attribute);
 
         // 攻撃を耐えたかどうか
         return health > 0;
@@ -175,6 +177,8 @@ public class DamageManager {
 
         double answer = 0;  // 結果格納用
 
+        log(damage + ":" + vit + ":" + mags);
+
         // 計算を行う
         answer = new StringCalc(config.getCalcDamage())
                 .replace("da",damage)   // 変数変換
@@ -183,7 +187,7 @@ public class DamageManager {
                 .replace("ra",Math.random())
                 .build()    // 計算式変換
                 .calc();    // 計算
-
+        log(answer+"");
         // 答えが負の値かつ倍率が負の値ではない時、結果を0にする
         if(answer < 0 && mags >= 0) answer = 0;
 

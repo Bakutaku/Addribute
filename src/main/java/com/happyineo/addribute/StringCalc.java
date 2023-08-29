@@ -1,10 +1,8 @@
 package com.happyineo.addribute;
 
-import com.happyineo.addribute.type.LogType;
 
 import java.util.*;
 
-import static com.happyineo.addribute.Utils.log;
 
 public class StringCalc {
 
@@ -70,7 +68,6 @@ public class StringCalc {
      * @return 逆ポーランド記法
      */
     public StringCalc build(){
-
         Map<String,Integer> weight = new HashMap<>();   // 優先順位用
         weight.put("^", 4);
         weight.put("*", 3);
@@ -110,7 +107,6 @@ public class StringCalc {
 
                 // 現在の演算子の優先度の方が優先度が高くなるまでスタックの中身を出力する
                 while(!stack.isEmpty() && weight.get(str) <= weight.get(stack.peek())){
-
                     builder.append(stack.pop()).append(" ");
 
                 }
@@ -184,6 +180,11 @@ public class StringCalc {
                         // 値を取り出す
                         num1 = stack.pop();
                         num2 = stack.pop();
+
+                        // 0の場合0じゃない方を格納する
+                        if(num1 == 0) stack.push(num2);
+                        else if(num2 == 0) stack.push(num1);
+                        if(num1 == 0 || num2 == 0) break;
 
                         // 計算を行いスタックに格納する
                         stack.push(num1 - num2);

@@ -31,6 +31,7 @@ public class StatusManager {
      * @return ステータス
      */
     public Status getStatus(Entity entity){
+        if(entity == null) return null;
         return dataManager.getStatus(entity);
     }
 

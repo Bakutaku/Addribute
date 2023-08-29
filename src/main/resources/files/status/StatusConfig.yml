@@ -151,7 +151,7 @@ levelUpNeedExpPoint: 15
 #   mags  : ダメージ倍率(属性の相性による倍率合計)
 #   ra    : 0以上1未満の乱数
 
-calcDamage: "damage * mags - vit"
+calcDamage: "da * mags - vit"
 
 #例 :
 #ダメージが10,倍率が1.5,防御力が5の場合

@@ -111,8 +111,14 @@ public class DamageEvent implements Listener {
                 }
             }
 
-            // ダメージを反映する
-            damageManager.damage(atk,e.getEntity(),attribute,damage);
+            // ダメージを反映する & 耐えれた場合ダメージを０にする
+            if(damageManager.damage(atk,e.getEntity(),attribute,damage)) event.setDamage(0);
+
+        }else {
+            // エンティティ以外からのダメージ
+
+            // ダメージを反映 & 耐えれた場合ダメージを0にする
+            if(damageManager.damage(event.getEntity(),event.getEntity(),"nature",event.getDamage())) event.setDamage(0);
         }
     }
 

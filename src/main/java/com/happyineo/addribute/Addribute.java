@@ -33,8 +33,12 @@ public final class Addribute extends JavaPlugin {
     public void onDisable() {
         // 終了時の処理
 
+        // 表示しているダメージを全て削除
+        RPGDamage.getManager().allDeleteDisp();
+
         // データを保存
         DataManager.getManager().save();
+
 
         super.onDisable();
     }

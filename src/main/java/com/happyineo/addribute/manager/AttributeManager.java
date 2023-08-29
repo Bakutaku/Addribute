@@ -17,17 +17,44 @@ public class AttributeManager {
         // 属性値取得
         this.attributes = DataManager.getManager().getAttributes().getAttributes();
 
-        // defaultの属性を作成(登録されていない時)
+        // default(属性なしの攻撃)の属性を作成(登録されていない時)
         if(!this.attributes.containsKey("default")) {
             // データ作成
             Attribute def = new Attribute();
-            def.setName("物理攻撃");
+            def.setName("通常攻撃");
+            def.setColorR(255);
+            def.setColorG(255);
+            def.setColorB(255);
             Map<String,Attribute.weakness> defMap = new HashMap<>();
+            Attribute.weakness weakness = new Attribute.weakness();
+            weakness.setName("通常攻撃");
+            weakness.setMag(1);
+            defMap.put("default",weakness);
             def.setMags(defMap);
 
             // 設定
             this.attributes.put("default",def);
         }
+        // nature(自然ダメージ(落下など))の属性を作成(登録されていなければ)
+        if(!this.attributes.containsKey("nature")) {
+            // データ作成
+            Attribute nat = new Attribute();
+            nat.setName("自然影響");
+            nat.setColorR(120);
+            nat.setColorG(205);
+            nat.setColorB(170);
+            Map<String,Attribute.weakness> defMap = new HashMap<>();
+            Attribute.weakness weakness = new Attribute.weakness();
+            weakness.setName("自然影響");
+            weakness.setMag(1);
+            defMap.put("nature",weakness);
+            nat.setMags(defMap);
+
+            // 設定
+            this.attributes.put("nature",nat);
+        }
+
+
     }
 
     /**

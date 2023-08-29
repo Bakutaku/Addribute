@@ -1,7 +1,7 @@
 package com.happyineo.addribute;
 
 import com.happyineo.addribute.type.LogType;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.logging.Logger;
@@ -57,7 +57,7 @@ public class Utils {
      */
     public static String getColorCode(int r,int g,int b){
         // RGB値を変換しカラーコードに変換し文字列にし表示する際の色の形式にする
-        return getColorCode(String.format("%02x%02x%02x", r,g,b));
+        return getColorCode(String.format("#%02x%02x%02x", r,g,b));
     }
 
 
@@ -68,9 +68,9 @@ public class Utils {
      */
     public static String getColorCode(String color){
         // コードが間違っていたらなしにする
-        if(ChatColor.getByChar(color) == null) return "";
+        if(!color.matches("#[a-fA-f0-9]{6}")) return "";
         // 変換しその値を返す
-        return ChatColor.getByChar(color).toString();
+        return ChatColor.of(color).toString();
     }
 
     /**

@@ -19,8 +19,8 @@ public class RPGDamage {
 
     private static RPGDamage manager;   // インスタンス格納用
     private final Config config = DataManager.getManager().getConfig(); // コンフィグ
-    private DecimalFormat format;
-    private Map<ArmorStand,Integer> indicators = new HashMap<>();   // ダメージ表示用のアーマースタンド管理用
+    private final DecimalFormat format;
+    private final Map<ArmorStand,Integer> indicators = new HashMap<>();   // ダメージ表示用のアーマースタンド管理用
 
     private RPGDamage(){
         manager = this;
@@ -138,7 +138,7 @@ public class RPGDamage {
         // 表示する座標を取得
         Location location = entity.getLocation().clone().add(
                 getRandomMinus(config.getDisplayDamagePositionX()),
-                getRandom(config.getDisplayDamagePositionY()) + 1,
+                getRandom(config.getDisplayDamagePositionY()) + 1.5,
                 getRandomMinus(config.getDisplayDamagePositionZ())
         );
 
@@ -154,4 +154,12 @@ public class RPGDamage {
             indicators.put(armorStand,config.getDisplayDamageTime());   // リストに追加
         });
     }
+
+    /**
+     * 現在表示しているダメージを全て削除する
+     */
+    public void allDeleteDisp(){
+        this.indicators.keySet().forEach(Entity::remove);
+    }
+
 }
