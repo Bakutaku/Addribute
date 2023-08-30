@@ -3,6 +3,8 @@ package com.happyineo.addribute;
 
 import java.util.*;
 
+import static com.happyineo.addribute.Utils.log;
+
 
 public class StringCalc {
 

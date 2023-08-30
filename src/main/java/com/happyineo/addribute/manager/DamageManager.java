@@ -92,12 +92,12 @@ public class DamageManager {
             // ステータスの影響を付与
             // 攻撃力
             damage += (atkStatus.getStrength() + atkStatus.getAddStrength()) * config.getStrengthValue();
-            // 防御
-            vitality = (entityStatus.getVitality() + entityStatus.getAddVitality()) * config.getVitalityValue();
-
-            // 属性取得
-            entityAttribute = entityStatus.getAttribute().toArray(new String[entityStatus.getAttribute().size()]);
         }
+        // 防御
+        vitality = (entityStatus.getVitality() + entityStatus.getAddVitality()) * config.getVitalityValue();
+
+        // 属性取得
+        entityAttribute = entityStatus.getAttribute().toArray(new String[entityStatus.getAttribute().size()]);
 
         // 倍率計算
         double mags = this.calcMags(attribute,entityAttribute);
@@ -136,7 +136,7 @@ public class DamageManager {
      */
     public boolean magicDamage(Entity atk,Entity entity,String attribute,double damage){
         // ステータスを持っていない物の場合、攻撃を無効にする
-        if(!(status.hasStatus(atk) && status.hasStatus(entity))){
+        if(!(status.hasStatus(entity))){
             atk.sendMessage(color("&c対象はステータスを持っていません"));//TODO デバック用のため後で削除する
 
             // ダメージを与える
@@ -144,12 +144,14 @@ public class DamageManager {
             return false;
         }
 
-        // ステータス取得
-        Status atkStatus = status.getStatus(atk);
+        // ステータスを持っているか
+        if(status.hasStatus(atk)) {
+            // ステータス取得
+            Status atkStatus = status.getStatus(atk);
 
-        // ダメージを魔法用に変更する(計算を物理攻撃のもので行うため物理分の増加分を減らし、魔法攻撃力を加算する)
-        damage += (atkStatus.getIntelligence() + atkStatus.getAddIntelligence()) - (atkStatus.getStrength() + atkStatus.getAddStrength()) * config.getStrengthValue();
-
+            // ダメージを魔法用に変更する(計算を物理攻撃のもので行うため物理分の増加分を減らし、魔法攻撃力を加算する)
+            damage += (atkStatus.getIntelligence() + atkStatus.getAddIntelligence()) - (atkStatus.getStrength() + atkStatus.getAddStrength()) * config.getStrengthValue();
+        }
         // 使用履歴の登録用文字列の作成(文字の並び,[UUIDs:属性s:ダメージ])
         String magic = atk.getUniqueId() + ":s:" + attribute + ":s:" + damage;
 

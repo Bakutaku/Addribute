@@ -8,6 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.text.DecimalFormat;
+
 import static com.happyineo.addribute.Addribute.getPlugin;
 import static com.happyineo.addribute.Utils.color;
 
@@ -17,6 +19,8 @@ public class PlayerStatusBarManager {
 
     private StatusManager statusManager = StatusManager.getManager();
     private StatusConfig config = DataManager.getManager().getStatusConfig();
+
+    private DecimalFormat format = new DecimalFormat("####0.00");
 
 
     //##################################################################################################################
@@ -42,12 +46,12 @@ public class PlayerStatusBarManager {
                     String text = DataManager.getManager().getConfig().getStatusActionBar();
 
                     // 値を変換
-                    text = text.replaceAll("%h", String.valueOf(status.getHealth()))
-                            .replaceAll("@h",String.valueOf((status.getMaxHealth() + status.getAddMaxHealth()) * config.getHealthValue()))
-                            .replaceAll("@ah",String.valueOf(status.getAddMaxHealth()* config.getHealthValue()))
-                            .replaceAll("%m",String.valueOf(status.getMagic()))
-                            .replaceAll("@m",String.valueOf((status.getMaxMagic() + status.getAddMaxMagic()) * config.getMagicValue()))
-                            .replaceAll("@am",String.valueOf(status.getAddMaxMagic() * config.getMagicValue()));
+                    text = text.replaceAll("%h", format.format(status.getHealth()))
+                            .replaceAll("@h",format.format((status.getMaxHealth() + status.getAddMaxHealth()) * config.getHealthValue()))
+                            .replaceAll("@ah",format.format(status.getAddMaxHealth()* config.getHealthValue()))
+                            .replaceAll("%m",format.format(status.getMagic()))
+                            .replaceAll("@m",format.format((status.getMaxMagic() + status.getAddMaxMagic()) * config.getMagicValue()))
+                            .replaceAll("@am",format.format(status.getAddMaxMagic() * config.getMagicValue()));
 
                     // 文字設定
                     disp.setText(color(text));
@@ -57,7 +61,7 @@ public class PlayerStatusBarManager {
                 });
 
             }
-        }.runTaskTimer(getPlugin(),0L,20L);
+        }.runTaskTimer(getPlugin(),0L,DataManager.getManager().getConfig().getStatusActionBarTimer());
 
     }
 
@@ -89,7 +93,7 @@ public class PlayerStatusBarManager {
         double health = status.getHealth();
 
         // 計算(現在の割合を計算
-        health = 20.0 * (max / health);
+        health = 20.0 * (health / max);
 
         // 適応(0以下ではないか確かめる(例外が出るため)
         if(health > 0) player.setHealth(health);
@@ -106,7 +110,7 @@ public class PlayerStatusBarManager {
         double magic = status.getMagic();
 
         // 計算(現在の割合を計算
-        magic = 20.0 * (max / magic);
+        magic =19.0 * (magic / max);
 
         // 適応
         if(magic > 0) player.setFoodLevel((int) Math.ceil(magic));
@@ -114,10 +118,4 @@ public class PlayerStatusBarManager {
         else player.setFoodLevel(0);
 
     }
-
-
-
-
-
-
 }

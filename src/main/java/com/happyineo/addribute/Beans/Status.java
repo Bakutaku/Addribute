@@ -30,6 +30,7 @@ public class Status {
     public Status() {
         // 初期値設定(属性)
         attribute.add("default");
+        attribute.add("nature");
     }
 
     public String getName() {

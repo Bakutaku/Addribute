@@ -104,7 +104,7 @@ public class DataManager {
             // 初期値設定
             data.setName(statusConfig.getNameDefault());
             data.setMaxHealth(statusConfig.getMaxHealthDefault());
-            data.setMaxHealth(statusConfig.getAddMaxHealthDefault());
+            data.setAddMaxHealth(statusConfig.getAddMaxHealthDefault());
             data.setHealth(statusConfig.getHealthDefault());
             data.setRecoveryHealth(statusConfig.getRecoveryHealthDefault());
             data.setMaxMagic(statusConfig.getMaxMagicDefault());

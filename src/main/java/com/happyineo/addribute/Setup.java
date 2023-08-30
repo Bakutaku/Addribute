@@ -27,6 +27,8 @@ public class Setup {
 
         AttributeManager.getManager();
 
+        RPGDamage.getManager();
+
         log("セットアップが完了しました");
     }
 }

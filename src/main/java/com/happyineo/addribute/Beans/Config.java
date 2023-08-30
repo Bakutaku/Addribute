@@ -16,6 +16,7 @@ public class Config {
     private int criticalHit = 20;   // クリティカルヒット率(%表記)
     private int statusTime = 200;   // ステータスの更新タイミング(tick)
     private String statusActionBar = "&f体力:&d%h&f/&d@h&e+@ha &f魔力:&5%m&f/&5@m&e+@ma";    // アクションバーに表示するステータス
+    private int statusActionBarTimer = 5;   // アクションバーに表示するステータスの更新頻度
 
     public boolean isDisableInvincibleTime() {
         return disableInvincibleTime;
@@ -127,5 +128,13 @@ public class Config {
 
     public void setStatusActionBar(String statusActionBar) {
         this.statusActionBar = statusActionBar;
+    }
+
+    public int getStatusActionBarTimer() {
+        return statusActionBarTimer;
+    }
+
+    public void setStatusActionBarTimer(int statusActionBarTimer) {
+        this.statusActionBarTimer = statusActionBarTimer;
     }
 }

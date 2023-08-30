@@ -1,6 +1,7 @@
 package com.happyineo.addribute.event;
 
 import com.happyineo.addribute.manager.DamageManager;
+import com.happyineo.addribute.manager.PlayerStatusBarManager;
 import com.happyineo.addribute.manager.StatusManager;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.*;
@@ -120,6 +121,10 @@ public class DamageEvent implements Listener {
             // ダメージを反映 & 耐えれた場合ダメージを0にする
             if(damageManager.damage(event.getEntity(),event.getEntity(),"nature",event.getDamage())) event.setDamage(0);
         }
+
+        // プレイヤーだったらステータスバーを変更する
+        if(event.getEntity() instanceof Player) PlayerStatusBarManager.getManager().update((Player) event.getEntity());
+
     }
 
 }
