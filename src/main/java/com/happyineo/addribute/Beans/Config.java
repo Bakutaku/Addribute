@@ -15,6 +15,7 @@ public class Config {
     private double displayDamagePositionMaxY = 2;   // ダメージ上昇頂点_Y
     private int criticalHit = 20;   // クリティカルヒット率(%表記)
     private int statusTime = 200;   // ステータスの更新タイミング(tick)
+    private String statusActionBar = "&f体力:&d%h&f/&d@h&e+@ha &f魔力:&5%m&f/&5@m&e+@ma";    // アクションバーに表示するステータス
 
     public boolean isDisableInvincibleTime() {
         return disableInvincibleTime;
@@ -118,5 +119,13 @@ public class Config {
 
     public void setStatusTime(int statusTime) {
         this.statusTime = statusTime;
+    }
+
+    public String getStatusActionBar() {
+        return statusActionBar;
+    }
+
+    public void setStatusActionBar(String statusActionBar) {
+        this.statusActionBar = statusActionBar;
     }
 }
