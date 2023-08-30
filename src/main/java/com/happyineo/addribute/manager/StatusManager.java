@@ -64,7 +64,7 @@ public class StatusManager {
         Status data = new Status();
         data.setName(statusConfig.getNameDefault());
         data.setMaxHealth(statusConfig.getMaxHealthDefault());
-        data.setMaxHealth(statusConfig.getAddMaxHealthDefault());
+        data.setAddMaxHealth(statusConfig.getAddMaxHealthDefault());
         data.setHealth(statusConfig.getHealthDefault());
         data.setRecoveryHealth(statusConfig.getRecoveryHealthDefault());
         data.setMaxMagic(statusConfig.getMaxMagicDefault());

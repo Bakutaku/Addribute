@@ -44,10 +44,10 @@ public class PlayerStatusBarManager {
                     // 値を変換
                     text = text.replaceAll("%h", String.valueOf(status.getHealth()))
                             .replaceAll("@h",String.valueOf((status.getMaxHealth() + status.getAddMaxHealth()) * config.getHealthValue()))
-                            .replaceAll("@ha",String.valueOf(status.getAddMaxHealth()* config.getHealthValue()))
+                            .replaceAll("@ah",String.valueOf(status.getAddMaxHealth()* config.getHealthValue()))
                             .replaceAll("%m",String.valueOf(status.getMagic()))
                             .replaceAll("@m",String.valueOf((status.getMaxMagic() + status.getAddMaxMagic()) * config.getMagicValue()))
-                            .replaceAll("@ma",String.valueOf(status.getAddMaxMagic() * config.getMagicValue()));
+                            .replaceAll("@am",String.valueOf(status.getAddMaxMagic() * config.getMagicValue()));
 
                     // 文字設定
                     disp.setText(color(text));

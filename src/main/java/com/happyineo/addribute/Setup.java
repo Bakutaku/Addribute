@@ -1,9 +1,6 @@
 package com.happyineo.addribute;
 
-import com.happyineo.addribute.manager.DataManager;
-import com.happyineo.addribute.manager.JsonManager;
-import com.happyineo.addribute.manager.StatusManager;
-import com.happyineo.addribute.manager.YamlManager;
+import com.happyineo.addribute.manager.*;
 
 import static com.happyineo.addribute.Utils.log;
 
@@ -22,7 +19,13 @@ public class Setup {
 
         DataManager.getManager();
 
+        DamageManager.getManager();
+
         StatusManager.getManager();
+
+        PlayerStatusBarManager.getManager();
+
+        AttributeManager.getManager();
 
         log("セットアップが完了しました");
     }
