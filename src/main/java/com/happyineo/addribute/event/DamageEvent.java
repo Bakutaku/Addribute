@@ -1,6 +1,7 @@
 package com.happyineo.addribute.event;
 
 import com.happyineo.addribute.manager.DamageManager;
+import com.happyineo.addribute.manager.DataManager;
 import com.happyineo.addribute.manager.PlayerStatusBarManager;
 import com.happyineo.addribute.manager.StatusManager;
 import org.bukkit.NamespacedKey;
@@ -12,6 +13,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import static com.happyineo.addribute.Addribute.getPlugin;
 import static com.happyineo.addribute.Utils.log;
@@ -114,6 +116,17 @@ public class DamageEvent implements Listener {
 
             // ダメージを反映する & 耐えれた場合ダメージを０にする
             if(damageManager.damage(atk,e.getEntity(),attribute,damage)) event.setDamage(0);
+
+            // 無敵時間を無効化するかどうか
+            if(DataManager.getManager().getConfig().isDisableInvincibleTime()){
+                // 無効化する場合
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        ((LivingEntity) e.getEntity()).setNoDamageTicks(0);
+                    }
+                }.runTaskLater(getPlugin(), 0);
+            }
 
         }else {
             // エンティティ以外からのダメージ

@@ -1,5 +1,6 @@
 package com.happyineo.addribute.event;
 
+import com.happyineo.addribute.manager.PlayerStatusBarManager;
 import com.happyineo.addribute.manager.StatusManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,7 +17,8 @@ public class JoinEvent implements Listener {
         // プレイヤーのステータスを設定する(getの際にプレイヤーのデータも自動で作成される)
         StatusManager.getManager().getStatus(event.getPlayer());
 
-        event.getPlayer().sendMessage(color(getColorCode(220,0,0)+"test"));
+        // ステータスバーを更新
+        PlayerStatusBarManager.getManager().update(event.getPlayer());
 
 
     }

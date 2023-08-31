@@ -21,7 +21,7 @@ public class Status {
     private int addVitality = 0;    // 防御力の増加分(バフなど)
     private int agility = 0;    // 素早さ
     private int addAgility = 0; // 素早さの増加分(バフなど)
-    private int exp = 0;    // 経験値
+    private long exp = 0;    // 経験値
     private int dropExp = 5;   // 落とす経験値
     private int level = 0;  // レベル
     private int statusPoint = 5;    // ステータスポイント
@@ -169,7 +169,7 @@ public class Status {
         this.addAgility = addAgility;
     }
 
-    public int getExp() {
+    public long getExp() {
         return exp;
     }
 

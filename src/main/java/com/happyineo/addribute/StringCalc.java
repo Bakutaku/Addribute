@@ -213,7 +213,7 @@ public class StringCalc {
                             stack.push(num1 / num2);
                         } catch (ArithmeticException e) {
                             // 0演算の場合、とりあえず0を入れておく
-                            stack.push(0.0);
+                            stack.push(num1);
                         }
 
                         break;

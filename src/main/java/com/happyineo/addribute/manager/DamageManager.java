@@ -9,7 +9,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -179,8 +178,6 @@ public class DamageManager {
 
         double answer = 0;  // 結果格納用
 
-        log(damage + ":" + vit + ":" + mags);
-
         // 計算を行う
         answer = new StringCalc(config.getCalcDamage())
                 .replace("da",damage)   // 変数変換
@@ -189,7 +186,7 @@ public class DamageManager {
                 .replace("ra",Math.random())
                 .build()    // 計算式変換
                 .calc();    // 計算
-        log(answer+"");
+
         // 答えが負の値かつ倍率が負の値ではない時、結果を0にする
         if(answer < 0 && mags >= 0) answer = 0;
 
@@ -211,7 +208,6 @@ public class DamageManager {
 
         // リストにあるか調べる
         for(String magic : this.magicUses){
-            log(magic.substring(magic.indexOf(":s:"),magic.length()),temp); // TODO デバック用
             if(magic.substring(magic.indexOf(":s:"),magic.length()).equals(temp))
                 return true;
         }
@@ -225,7 +221,6 @@ public class DamageManager {
 
         // リストにあるか調べる
         for(String magic : this.magicUses){
-            log(magic.substring(magic.indexOf(":s:")),temp); // TODO デバック用
 
             // :s:が特定の数あるか調べる
             Pattern p = Pattern.compile("(:s:){4,}");

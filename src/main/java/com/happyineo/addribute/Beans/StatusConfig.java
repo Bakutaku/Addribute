@@ -46,7 +46,7 @@ public class StatusConfig {
     //ステータスポイント===================================================================================================
     private int levelUpAddStatusPoint = 1;
     //経験値=============================================================================================================
-    private int levelUpNeedExpPoint = 15;
+    private String levelUpNeedExpPoint = "lv * 15";
     //ダメージ計算========================================================================================================
     private String calcDamage = "damage * mags - vit";
     //==================================================================================================================
@@ -372,11 +372,11 @@ public class StatusConfig {
         this.levelUpAddStatusPoint = levelUpAddStatusPoint;
     }
 
-    public int getLevelUpNeedExpPoint() {
+    public String getLevelUpNeedExpPoint() {
         return levelUpNeedExpPoint;
     }
 
-    public void setLevelUpNeedExpPoint(int levelUpNeedExpPoint) {
+    public void setLevelUpNeedExpPoint(String levelUpNeedExpPoint) {
         this.levelUpNeedExpPoint = levelUpNeedExpPoint;
     }
 
