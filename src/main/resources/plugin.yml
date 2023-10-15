@@ -2,3 +2,17 @@ name: Addribute
 version: '${project.version}'
 main: com.happyineo.addribute.Addribute
 api-version: '1.18'
+
+commands:
+
+  debugItemAttribute:
+    description: デバック用のコマンド
+    permission: addribute.op
+
+  debugItemDamage:
+    description: デバック用のコマンド
+
+
+permissions:
+  addribute.op:
+    default: op

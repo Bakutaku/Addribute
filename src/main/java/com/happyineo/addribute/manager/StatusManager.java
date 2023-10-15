@@ -116,7 +116,6 @@ public class StatusManager {
         return this.getStatus(entity) != null;
     }
 
-
     /**
      * StatusManagerのインスタンスを取得する
      * @return {@link StatusManager}

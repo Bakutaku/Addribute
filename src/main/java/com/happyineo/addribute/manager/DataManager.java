@@ -155,6 +155,11 @@ public class DataManager {
         return data;
     }
 
+    /**
+     * ステータスの登録(更新)
+     * @param entity
+     * @param status
+     */
     public void setStatus(Entity entity,Status status){
         // プレイヤーかどうか調べる
         if(entity instanceof Player && this.playerStatus.containsKey(entity.getUniqueId())){
@@ -164,8 +169,13 @@ public class DataManager {
         }else if(this.entityStatus.getEntityStatus().containsKey(entity.getUniqueId())){
             // ステータス更新
             this.entityStatus.getEntityStatus().put(entity.getUniqueId(),status);
+        }else{
+            // ステータス登録
+            this.entityStatus.getEntityStatus().put(entity.getUniqueId(),status);
         }
     }
+
+
 
     /**
      * dataを保存する

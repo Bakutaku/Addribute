@@ -20,11 +20,11 @@ public class DamageManager {
 
     private static DamageManager manager;   // 自クラスのインスタンス格納用
 
-    private StatusConfig config = DataManager.getManager().getStatusConfig();   // ステータスのコンフィグ
+    private final StatusConfig config = DataManager.getManager().getStatusConfig();   // ステータスのコンフィグ
 
-    private StatusManager status = StatusManager.getManager();  // ステータス
+    private final StatusManager status = StatusManager.getManager();  // ステータス
 
-    private List<String> magicUses = new CopyOnWriteArrayList<>();    // 魔法で攻撃したかどうか
+    private final List<String> magicUses = new CopyOnWriteArrayList<>();    // 魔法で攻撃したかどうか
 
     private DamageManager(){
         manager = this;
@@ -51,6 +51,8 @@ public class DamageManager {
         // マネージャーを取得
         AttributeManager manager = AttributeManager.getManager();
 
+        int count = 0;  // 属性が一致しなかった場合倍率を1にするため
+
         double answer = 0; // 結果格納用
         // 受ける側の属性を1ずつ確かめる
         for(String key : defense){
@@ -60,9 +62,14 @@ public class DamageManager {
                 if(atk.equals(mag)){
                     //  倍率を加算する
                     answer += manager.getAttribute(key).getMags().get(mag).getMag();
+                    count++;
                 }
             }
         }
+
+        // 一致する弱点がない場合
+        if(count == 0)answer = 1;
+
         // 倍率を返す
         return answer;
     }
