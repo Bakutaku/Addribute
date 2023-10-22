@@ -116,6 +116,7 @@ public class DamageEvent implements Listener {
 
             // ダメージを反映する & 耐えれた場合ダメージを０にする
             if(damageManager.damage(atk,e.getEntity(),attribute,damage)) event.setDamage(0);
+            else ((LivingEntity) event.getEntity()).setHealth(0.1);
 
             // 無敵時間を無効化するかどうか
             if(DataManager.getManager().getConfig().isDisableInvincibleTime()){
@@ -133,6 +134,7 @@ public class DamageEvent implements Listener {
 
             // ダメージを反映 & 耐えれた場合ダメージを0にする
             if(damageManager.damage(event.getEntity(),event.getEntity(),"nature",event.getDamage())) event.setDamage(0);
+            else ((LivingEntity) event.getEntity()).setHealth(0.1);
         }
 
         // プレイヤーだったらステータスバーを変更する
