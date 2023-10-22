@@ -49,14 +49,6 @@ public class StatusManager {
      * @param entity 対象
      */
     public void createStatusEntity(Entity entity) {
-
-        LivingEntity livingEntity;  // データ型返還後の格納用
-
-        // データ型を変換する(生きているエンティティか調べる)
-        if (entity instanceof LivingEntity) livingEntity = (LivingEntity) entity;
-            // 出来なかった場合
-        else return;
-
         // コンフィグ取得
         StatusConfig statusConfig = dataManager.getStatusConfig();
 
@@ -85,8 +77,11 @@ public class StatusManager {
         data.setStatusPoint(statusConfig.getStatusPointDefault());
 
         // プレイヤー以外かどうか
-        if (!(entity instanceof Player)) {
+        if (!(entity instanceof Player) && entity instanceof LivingEntity) {
             // プレイヤー以外の場合
+
+            // 生きているエンティティに変換
+            LivingEntity livingEntity = (LivingEntity) entity;
 
             // 一部の初期値変更(体力などをエンティティの体力にあわせるため)
             // 名前の設定を取得
@@ -101,6 +96,17 @@ public class StatusManager {
             data.setName(name); // 名前
             data.setMaxHealth((int) livingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());    // 最大体力
             data.setHealth(livingEntity.getHealth());   // 体力
+        }else if(!(entity instanceof LivingEntity)){
+            // 生きていないエンティティの場合
+
+            // 一部内容変更
+            // 名前の設定を取得
+            String name = statusConfig.getNameDefault();
+
+            // 名前がない場合
+            if (entity.getName().equals("")) name = name.replace("%n", entity.getType().toString());
+                // 名前がある場合
+            else name = name.replace("%n", entity.getName());
         }
 
         // 登録

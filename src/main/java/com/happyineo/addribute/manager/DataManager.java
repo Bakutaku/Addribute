@@ -71,7 +71,6 @@ public class DataManager {
 
             @Override
             public void run(){
-                log("テスト");
                 log(LogType.DEBUG,"現在のエンティティ数:"+entity.size());
 
                 for(UUID key : entity){
