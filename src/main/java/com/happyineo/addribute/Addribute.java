@@ -5,8 +5,12 @@ import com.happyineo.addribute.command.DebugAddItemAttributeCommand;
 import com.happyineo.addribute.command.DebugAddItemDamageCommand;
 import com.happyineo.addribute.event.*;
 import com.happyineo.addribute.manager.DataManager;
+import com.happyineo.addribute.type.LogType;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.logging.Level;
+
 
 import static com.happyineo.addribute.Utils.*;
 
@@ -19,11 +23,17 @@ public final class Addribute extends JavaPlugin {
         // 起動時の処理
         plugin = this;
 
+
         // セットアップ
         new Setup().setup();
 
         // コンフィグ取得
         Config config = DataManager.getManager().getConfig();
+
+        // ログレベルの設定
+        setLogLevel(getLogType(config.getLogLevel()));
+
+        log(LogType.DEBUG,"テストデバック");
 
         // イベント登録###################################################################################################
         Bukkit.getPluginManager().registerEvents(new JoinEvent(),this); // ログイン時のイベント(データベースの場合不要)

@@ -6,12 +6,14 @@ import com.happyineo.addribute.type.LogType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+import static com.happyineo.addribute.Addribute.getPlugin;
 import static com.happyineo.addribute.Utils.log;
 
 public class DataManager {
@@ -21,7 +23,7 @@ public class DataManager {
     private StatusConfig statusConfig;  // ステータスのコンフィグ
     private AttributeConfig attributes; // 属性情報
     private EntityStatus entityStatus;  // エンティティのステータス情報
-    private Map<UUID, Status> playerStatus = new HashMap<>(); // プレイヤーのステータス情報
+    private final Map<UUID, Status> playerStatus = new HashMap<>(); // プレイヤーのステータス情報
 
 
     private DataManager() {
@@ -61,6 +63,30 @@ public class DataManager {
         } catch (InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
             log(LogType.CRITICAL,"データの生成に失敗しました(システムに問題がある可能性があるため開発者に報告をしてくれるとありがたいです)",e.getMessage());
         }
+
+        // ステータスの管理
+        new BukkitRunnable(){
+            final Set<UUID> entity = entityStatus.getEntityStatus().keySet();   // 現在のエンティティを取得
+            final List<UUID> removal = new ArrayList<>();   // 削除するエンティティ格納用
+
+            @Override
+            public void run(){
+                log("テスト");
+                log(LogType.DEBUG,"現在のエンティティ数:"+entity.size());
+
+                for(UUID key : entity){
+                    // 削除対象か調べる
+                    if(entityStatus.getEntityStatus().get(key).getHealth() <= 0 ||
+                            Bukkit.getEntity(key) == null){
+                        // 削除する場合
+                        // 削除対象に追加する
+                        removal.add(key);
+                    }
+                }
+                // 削除する
+                removal.forEach(entity::remove);
+            }
+        }.runTaskTimer(getPlugin(),0L,config.getStatusTime());
     }
 
 
@@ -160,22 +186,20 @@ public class DataManager {
      * @param entity
      * @param status
      */
-    public void setStatus(Entity entity,Status status){
+    public void setStatus(Entity entity,Status status) {
         // プレイヤーかどうか調べる
-        if(entity instanceof Player && this.playerStatus.containsKey(entity.getUniqueId())){
+        if (entity instanceof Player && this.playerStatus.containsKey(entity.getUniqueId())) {
             // ステータス更新
-            this.playerStatus.put(entity.getUniqueId(),status);
+            this.playerStatus.put(entity.getUniqueId(), status);
 
-        }else if(this.entityStatus.getEntityStatus().containsKey(entity.getUniqueId())){
+        } else if (this.entityStatus.getEntityStatus().containsKey(entity.getUniqueId())) {
             // ステータス更新
-            this.entityStatus.getEntityStatus().put(entity.getUniqueId(),status);
-        }else{
+            this.entityStatus.getEntityStatus().put(entity.getUniqueId(), status);
+        } else {
             // ステータス登録
-            this.entityStatus.getEntityStatus().put(entity.getUniqueId(),status);
+            this.entityStatus.getEntityStatus().put(entity.getUniqueId(), status);
         }
     }
-
-
 
     /**
      * dataを保存する

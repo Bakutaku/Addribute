@@ -4,11 +4,38 @@ import com.happyineo.addribute.type.LogType;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 public class Utils {
 
-    private static Logger logger = Addribute.getPlugin().getLogger();   // ログ用
+    private static final Logger logger = Addribute.getPlugin().getLogger();   // ログ用
+
+    private static LogType logLevel = LogType.INFO;    // ログレベル
+
+    /**
+     * ログレベルを変更する
+     * @param logType ログレベル
+     */
+    public static void setLogLevel(LogType logType){
+        logLevel = logType;
+    }
+
+    /**
+     * <p>文字からログレベルを取得する</p>
+     * <p>取得できなかった場合はINFOが返される</p>
+     * @param logLevel ログレベルの名前
+     * @return {@link LogType}
+     */
+    public static LogType getLogType(String logLevel){
+
+        // どのレベルか調べる
+        for(LogType type : LogType.values()){
+            // 同じレベルのものが見つかったらそのレベルを戻り値として返す
+            if(type.getLogLevel().equalsIgnoreCase(logLevel)) return type;
+        }
+        // 見つからなければINFOを返す
+        return LogType.INFO;
+    }
 
     /**
      * ログ表示
@@ -25,10 +52,21 @@ public class Utils {
      * @param message メッセージ
      */
     public static void log(LogType logType,String... message){
+
+        // ログレベル確認
+        if(logLevel.getSerious() > logType.getSerious()){
+            // ログレベルが設定値より低いため出力をキャンセルする
+            return;
+        }
+
         // ログメッセージ表示
         for (String str : message) {
             // ログ表示
             switch (logType) {
+                case DEBUG:
+                    logger.info("DEBUG:"+str);
+                    break;
+
                 case INFO:
                     logger.info(str);
                     break;

@@ -17,6 +17,7 @@ public class Config {
     private int statusTime = 200;   // ステータスの更新タイミング(tick)
     private String statusActionBar = "&f体力:&d%h&f/&d@h&e+@ha &f魔力:&5%m&f/&5@m&e+@ma";    // アクションバーに表示するステータス
     private int statusActionBarTimer = 5;   // アクションバーに表示するステータスの更新頻度
+    private String logLevel = "INFO";
 
     public boolean isDisableInvincibleTime() {
         return disableInvincibleTime;
@@ -136,5 +137,13 @@ public class Config {
 
     public void setStatusActionBarTimer(int statusActionBarTimer) {
         this.statusActionBarTimer = statusActionBarTimer;
+    }
+
+    public String getLogLevel() {
+        return logLevel;
+    }
+
+    public void setLogLevel(String logLevel) {
+        this.logLevel = logLevel;
     }
 }
