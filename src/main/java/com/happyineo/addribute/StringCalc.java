@@ -207,7 +207,7 @@ public class StringCalc {
 
                         // 計算を行いスタックに格納する
                         try {
-                            stack.push(num1 / num2);
+                            stack.push(num2 / num1);
                         } catch (ArithmeticException e) {
                             // 0演算の場合、とりあえず0を入れておく
                             stack.push(0.0);
